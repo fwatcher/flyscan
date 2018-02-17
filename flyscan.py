@@ -57,12 +57,12 @@ def urlInit(url):
 
 def stdformat():
 	print "Usage: "
-	print "       python %s [URL] [ThreadNumbers] [Timeout]" % (sys.argv[0])
+	print "       python %s [URL] [Timeout]" % (sys.argv[0])
 
 def detect(url, timeout, flag):
     response = requests.head(url, headers = headers,timeout = timeout)
     status = response.status_code
-    print url
+   # print url
     screenLock.acquire()
     if status == 200:
         ColorPrinter.print_green_text("[ " + str(status) + " ]")
@@ -81,7 +81,7 @@ def detect(url, timeout, flag):
 
 def scan(tmplist = []):
 	for i in tmplist:
-		time.sleep(0.1)
+		#time.sleep(0.1)
 		i.start()
 	for j in tmplist:
 		j.join()
@@ -89,8 +89,7 @@ def scan(tmplist = []):
 def main():
 
 	# 初始化程序
-
-    if len(sys.argv) == 4:
+    if len(sys.argv) == 3:
         pass
     elif len(sys.argv) == 2 and sys.argv[1] == '-h':
         stdformat()
@@ -104,8 +103,7 @@ def main():
     # 参数赋值，处理
 
     targetUrl = urlInit(sys.argv[1])
-    threadNumber = int(sys.argv[2])
-    timeout = float(sys.argv[3])
+    timeout = float(sys.argv[2])
 
     print "Part 1: ......"
         
