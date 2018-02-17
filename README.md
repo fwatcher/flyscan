@@ -15,6 +15,10 @@ a directory scanning tool based on python
 
 example: python flyscan.py 127.0.0.1
 
+## 效果图
+
+![image](https://github.com/fwatcher/flyscan/blob/master/123.png)
+
 ## 下一版本
 
 1.将扫描结果整理成树形结构
@@ -22,5 +26,6 @@ example: python flyscan.py 127.0.0.1
 2.调整和优化词典
 
 3.完善程序的多线程机制
+
 
 
