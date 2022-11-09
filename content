@@ -1,0 +1,32 @@
+Hello @dndx,
+
+First, Thank you for your reply. :)
+
+I understand your point of view, the 'file-log' plugin just provides a log-path feature, The command execution is not directly caused by this plugin.But I want to explain why I think it's a security vulnerability and need to be fixed.
+
+1.It is beyond the original function of 'file-log' plugin
+
+In my opinion, To evaluate some feature is vulnerable or not,it depends on whether a malicious attacker can abuse this function to do something beyond its original function.For example, kong gateway users can specify log paths freely, but high-risk files in the system should not be overwritten or appended.
+
+2.In the other parameter of kong gateway plugins, the dangerous operations are prohibited
+
+For example, the file-log plugin also support 'config.custom_fields_by_lua' parameter to execute lua code.
+```
+dofile|require: Provides access to the hard drive.
+os.execute can significantly alter the host system.
+io.*: Provides access to the hard drive.
+```
+These function are disabled, because they can be used to execute code, access hard drive.
+
+The 'config.path' parameter is similar to this situation.If the file path or file name extension is not limited, it will allow attack write anything to any file in this system (Although the content contains some log data, It doesn't diminish the severity of this vulnerability).The following security risks may exist:
+(1).Arbitrary Code Execution (write to the /home/xxx/.bashrc or crontab file)
+(2).Cross-site request forgery (write to the html file)
+(3).To affect the system availability (write to the /etc/kong/kong.conf or lua file)
+
+3.Many kong gateway users are unaware of this security risk and are affected by this suspected vulnerability
+
+The file-log is the default plugin of kong gateway, I have preliminarily proven that at least 5000+ Kong gateway users are affected and can be directly attacked.If the details of the suspected vulnerability are disclosed before it's fixed, many users will suffer losses.
+
+I hope you can discuss this suspected vulnerability again.Because Kong gateway is the most popular api gateway in the world, every decision will affect a large number of users.
+
+Thank you agin for your reply, Hope you have a nice life.
